@@ -40,7 +40,7 @@ In this session, we'll cover:
 
 The main script that demonstrates how to fetch data from the EDGAR API, clean it using pandas, and return a DataFrame. This script will serve as a hands-on example during the talk.
 
-What the end result looks like: **[https://10-k-financials-website.vercel.app/aapl](URL to my site)**
+What the end result looks like: **[my site](https://10-k-financials-website.vercel.app/aapl)**
 
 ### `yf_api.py`
 

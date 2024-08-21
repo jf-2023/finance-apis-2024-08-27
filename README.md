@@ -1,4 +1,4 @@
-# Finance API presentaion at the Dojo on 08/27/24
+# Finance API presentation on 08/27/24
 
 This Repo outlines the upcoming talk scheduled for 08/27/24 at the dojo. The focus will be on the EDGAR database API provided by the SEC, and we'll explore how to fetch data, clean it, and return a pandas DataFrame.
 

@@ -66,7 +66,9 @@ def fetch_company_submission(cik_str: str) -> pd.DataFrame:
     If the entity has additional filings, files will contain an array of additional JSON files and the date range for the filings each one contains.
     """
     submission_json = request_api(f"https://data.sec.gov/submissions/CIK{cik_str}.json")
-    normalized_df = pd.json_normalize(submission_json) # use json_normalize for semi-structured data
+    normalized_df = pd.json_normalize(
+        submission_json
+    )  # use json_normalize for semi-structured data
     return normalized_df
 
 

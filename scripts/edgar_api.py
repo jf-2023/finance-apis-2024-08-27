@@ -121,7 +121,3 @@ print(fetch_company_submission(cik).T)
 print(fetch_company_concept(cik).T)
 print(fetch_company_facts(cik).T)
 print(fetch_company_frames().T)
-
-
-# We will focus our time on 'data.sec.gov/api/xbrl/companyfacts/' as that is where the most useful data is.
-# Next we will clean our output from fetch_company_facts()

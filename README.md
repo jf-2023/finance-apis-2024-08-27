@@ -1,4 +1,4 @@
-# Finance API presentation on 08/27/24
+# Finance API presentation @ Hacker Dojo on 08/27/24
 
 This Repo outlines the upcoming talk scheduled for 08/27/24 at the dojo. The focus will be on the EDGAR database API provided by the SEC, and we'll explore how to fetch data, clean it, and return a pandas DataFrame.
 
@@ -42,7 +42,7 @@ The main script that demonstrates how to fetch data from the EDGAR API, clean it
 
 What the end result looks like: **[my site](https://10-k-financials-website.vercel.app/aapl)**
 
-### `yf_api.py`
+### `alpha-vantage.py`
 
 This script goes over getting real time stock information.
 

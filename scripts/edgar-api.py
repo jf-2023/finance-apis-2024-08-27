@@ -30,6 +30,17 @@ def request_api(api_url: str) -> dict:
         return response.json()
     except requests.RequestException as e:
         raise RuntimeError(f"An error occurred while requesting the API: {e}")
+    
+
+def see_company_tickers():
+    """
+    look at the company_tickers json https://www.sec.gov/files/company_tickers.json
+    {"0":{"cik_str":320193,"ticker":"AAPL","title":"Apple Inc."}, ...}
+    """
+    tickers_json = request_api("https://www.sec.gov/files/company_tickers.json")
+    ticker_obj_list = list(tickers_json.values())[:10]
+    for i in ticker_obj_list:
+        print(i)
 
 
 # first step is to get CIK of the stock you want info for
@@ -211,6 +222,7 @@ def _format_values(merged_df: pd.DataFrame) -> pd.DataFrame:
 pd.set_option("display.max_rows", 500)
 pd.options.mode.chained_assignment = None
 
+"""
 TICKER = "META"
 df1 = clean_company_data(show_company_facts_df(TICKER, "Assets"), "Assets")
 df2 = clean_company_data(show_company_facts_df(TICKER, "NetIncomeLoss"), "NetIncome")
@@ -221,3 +233,9 @@ print(result)
 print()
 print()
 print(_format_values(result))
+"""
+
+TICKER = "META"
+cik = fetch_cik(TICKER)
+result = fetch_company_concept(cik)
+print(result.T)

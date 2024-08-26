@@ -1,9 +1,9 @@
 import os
 
+import matplotlib.pyplot as plt
 import pandas as pd
 import requests
 from dotenv import load_dotenv
-import matplotlib.pyplot as plt
 
 load_dotenv()
 
@@ -67,7 +67,7 @@ def fetch_cik(company_name: str = "") -> str:
     company_name = company_name.upper()
     if company_name:
         for obj in tickers_json.values():
-            if obj["ticker"] == company_name:\
+            if obj["ticker"] == company_name:
                 return f'{obj["cik_str"]:010}'
     print(
         f"the cik for {company_name} was not found, giving cik for AAPL instead by default"
@@ -90,23 +90,27 @@ def get_company_concept_account(company_name: str, account: str) -> pd.DataFrame
     clean_df["year"] = pd.to_datetime(clean_df["end"]).dt.year
     clean_df = clean_df.drop_duplicates(subset=["year"], keep="last")
     clean_df = clean_df[["year", "val"]]
-    clean_df = clean_df.rename(columns={"val": company_name, "year":account})
+    clean_df = clean_df.rename(columns={"val": company_name, "year": account})
 
     return clean_df
 
 
-def compare_companies(companies_list: list[str], account: str, account_rename: str) -> pd.DataFrame:
+def compare_companies(
+    companies_list: list[str], account: str, account_rename: str
+) -> pd.DataFrame:
     final_df = get_company_concept_account(companies_list[0], account)
     for company in companies_list[1:]:
         current_df = get_company_concept_account(company, account)
         final_df = pd.merge(final_df, current_df, on=account, how="outer")
 
-    final_df = final_df.rename(columns={account:account_rename})
+    final_df = final_df.rename(columns={account: account_rename})
     return final_df
 
 
 companies_to_compare_list = ["META", "AAPL", "AMZN", "GOOG"]
-result = compare_companies(companies_to_compare_list, "NetCashProvidedByUsedInOperatingActivities", "cashFlows")
+result = compare_companies(
+    companies_to_compare_list, "NetCashProvidedByUsedInOperatingActivities", "cashFlows"
+)
 result["cashFlows"] = result["cashFlows"].astype(int)
 result = result[result["cashFlows"] > 2015]
 str_result = result.map(format_values)

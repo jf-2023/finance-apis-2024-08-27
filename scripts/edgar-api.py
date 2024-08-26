@@ -2,13 +2,19 @@ import os
 
 import pandas as pd
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def load_env_var(var_name: str) -> str:
     """Function to load an environment variable"""
     value = os.getenv(var_name)
     if value is None:
-        raise ValueError(f"Environment variable '{var_name}' not found.")
+        raise ValueError(
+            f"Environment variable '{var_name}' not found.\n"
+            f"Please make sure you made a .env file with your email address"
+        )
     return value
 
 

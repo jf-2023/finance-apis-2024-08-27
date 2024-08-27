@@ -4,16 +4,15 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
-
 
 def load_env_var(var_name: str) -> str:
     """Function to load an environment variable"""
+    load_dotenv()
     value = os.getenv(var_name)
     if value is None:
         raise ValueError(
             f"Environment variable '{var_name}' not found.\n"
-            f"Please make sure you made a .env file with your email address"
+            f"Please make sure you made a .env file"
         )
     return value
 
@@ -21,10 +20,8 @@ def load_env_var(var_name: str) -> str:
 def request_api(api_url: str) -> dict:
     """
     Sends a GET request to the specified API URL with a User-Agent header.
-
     Returns:
         Dict[str, Any]: The JSON response from the API as a dictionary.
-
     Raises:
         requests.RequestException: For issues with the request.
     """
@@ -42,7 +39,7 @@ def request_api(api_url: str) -> dict:
 def fetch_cik(company_name: str = "") -> str:
     """
     GET CIK id for the specified company name. If no company name is passed,
-    the function will return a CIK id for a random company.
+    the function will return a CIK id for Apple inc.
 
     :param company_name: str, user-specified company ticker symbol, e.g., 'AMZN' for Amazon.
     :return: str, CIK id of the specified or random company. Must be a width of 10 characters.
@@ -53,10 +50,7 @@ def fetch_cik(company_name: str = "") -> str:
     if company_name:
         for obj in tickers_json.values():
             if obj["ticker"] == company_name:
-                print()
                 print(obj)
-                print(f"the cik for {company_name} is: {obj['cik_str']}")
-                print()
                 return f'{obj["cik_str"]:010}'
     print(
         f"the cik for {company_name} was not found, giving cik for AAPL instead by default"

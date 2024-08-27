@@ -50,7 +50,7 @@ def get_valuation_from_db(ticker_str: str) -> int:
 
 
 def check_buying_opportunity(ticker_str: str):
-    """ check calculated valuation with current price and check for possible buying opportunity"""
+    """check calculated valuation with current price and check for possible buying opportunity"""
     valuation = get_valuation_from_db(ticker_str)
     current_price = get_market_cap(ticker_str)
     if current_price <= valuation:

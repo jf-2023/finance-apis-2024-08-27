@@ -113,7 +113,7 @@ def _format_values(int_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot_df(dataframe: pd.DataFrame, account: str):
-    """ plot a line chart for a pandas df"""
+    """plot a line chart for a pandas df"""
     # Set the 'Year' column as the index
     df = result.set_index(account)
     df.plot(kind="line")

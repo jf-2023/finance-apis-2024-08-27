@@ -21,7 +21,7 @@ def get_market_cap(ticker_str: str) -> int:
     """
     get the market capitalization of specified stock ticker, returns int or float
     """
-    apikey = load_env_var("AV_API_KEY")
+    apikey = load_env_var("ALPHA_VANTAGE_API_KEY")
     url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker_str}&apikey={apikey}"
     r = requests.get(url)
     r_json = r.json()

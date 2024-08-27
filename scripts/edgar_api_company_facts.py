@@ -211,7 +211,7 @@ def get_formatted_financials(ticker: str):
 
 
 def upload_to_mongodb(ticker: str):
-    """ upload dict data to mongoDB"""
+    """upload dict data to mongoDB"""
     client = pymongo.MongoClient()
     db = client["hacker"]
     collection = db["dojo"]

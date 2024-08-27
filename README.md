@@ -1,6 +1,6 @@
-# Finance API presentation at Hacker Dojo on 08/27/24
+# Finance API Presentation at Hacker Dojo on 08/27/24
 
-This Repo outlines the upcoming talk scheduled for 08/27/24 at the dojo. The focus will be on the EDGAR database API provided by the SEC, and we'll explore how to fetch data, clean it, and return a pandas DataFrame.
+This repository outlines the upcoming talk scheduled for 08/27/24 at Hacker Dojo. The focus will be on the EDGAR database API provided by the SEC, and we'll explore how to fetch data, clean it, and return a pandas DataFrame.
 
 ## Talk Overview
 
@@ -40,9 +40,17 @@ In this session, we'll cover:
 
 The main script that demonstrates how to fetch data from the EDGAR API, clean it using pandas, and return a DataFrame. This script will serve as a hands-on example during the talk.
 
-What the end result looks like: **[my site](https://10-k-financials-website.vercel.app/aapl)**
-
 ### `alpha-vantage.py`
 
-This script goes over getting real time stock information.
+This script demonstrates how to get real-time stock information.
 
+## Setup
+
+To run the scripts, you'll need to set up your environment:
+
+1. **Create a `.env` file** in the root directory of the project.
+2. Add the following variables to your `.env` file:
+   - `EMAIL_ADDRESS`: Your email address for accessing the EDGAR API.
+   - `ALPHA_VANTAGE_API_KEY`: Your API key for Alpha Vantage. [Get your free API key here](https://www.alphavantage.co/support/#api-key).
+
+Make sure not to share your `.env` file or commit it to version control to keep your API keys secure.

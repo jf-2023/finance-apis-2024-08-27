@@ -77,8 +77,8 @@ def fetch_cik_obj(company_name: str = "") -> dict:
 
     company_name = company_name.upper()
     for obj in tickers_json.values():
-            if obj["ticker"] == company_name:
-                return obj
+        if obj["ticker"] == company_name:
+            return obj
     else:
         print(f"No object for {company_name} was found, returning empty dict")
         return {}
@@ -198,7 +198,7 @@ def get_formatted_financials(ticker: str):
 
     result_df = process_financial_data(ticker)
     result_df = add_valuation(result_df)
-    result_df['year'] = result_df['year'].astype(str)
+    result_df["year"] = result_df["year"].astype(str)
     result_df.set_index("year", inplace=True)
     current_value = result_df.tail(average_years_timeframe)["CashFlows"].mean()
     value_dict = {"valuation": int(current_value * earnings_multiplier)}

@@ -8,20 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def format_values(num: int) -> str:
-    """
-    To make data more readable
-    Example:
-    format_values(1_230_000_000_000)
-    '1.23T'
-    """
-    format_tuples = [(1e12, " T"), (1e9, " B"), (1e6, " M"), (1e6, " K")]
-    for threshold, suffix in format_tuples:
-        if abs(num) >= threshold:
-            return f"{num / threshold:.2f}{suffix}"
-    return str(num)
-
-
 def load_env_var(var_name: str) -> str:
     """Function to load an environment variable"""
     value = os.getenv(var_name)
@@ -107,28 +93,44 @@ def compare_companies(
     return final_df
 
 
+def format_values(num: int) -> str:
+    """
+    To make data more readable
+    Example:
+    format_values(1_230_000_000_000)
+    '1.23 T'
+    """
+    format_tuples = [(1e12, " T"), (1e9, " B"), (1e6, " M"), (1e6, " K")]
+    for threshold, suffix in format_tuples:
+        if abs(num) >= threshold:
+            return f"{num / threshold:.2f}{suffix}"
+    return str(num)
+
+
+def _format_values(int_df: pd.DataFrame) -> pd.DataFrame:
+    """helper function for format_values()"""
+    return int_df.map(format_values)
+
+
+def plot_df(dataframe: pd.DataFrame, account: str):
+    """ plot a line chart for a pandas df"""
+    # Set the 'Year' column as the index
+    df = result.set_index(account)
+    df.plot(kind="line")
+
+    plt.show()
+
+
 companies_to_compare_list = ["META", "AAPL", "AMZN", "GOOG"]
 result = compare_companies(
     companies_to_compare_list, "NetCashProvidedByUsedInOperatingActivities", "cashFlows"
 )
+
 result["cashFlows"] = result["cashFlows"].astype(int)
 result = result[result["cashFlows"] > 2015]
-str_result = result.map(format_values)
+
 with pd.option_context("display.max_columns", 10):
     print(result)
-    print(str_result)
+    print(_format_values(result))
 
-# Set the 'Year' column as the index (optional)
-df = result.set_index("cashFlows")
-
-# Plot the DataFrame
-df.plot(kind="line")
-
-# Customize the plot
-plt.title("Sales and Profit Over Time")
-plt.xlabel("Year")
-plt.ylabel("Values")
-plt.grid(True)
-
-# Show the plot
-plt.show()
+# plot_df(result, "cashFlows")

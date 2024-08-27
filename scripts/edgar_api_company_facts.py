@@ -154,17 +154,16 @@ def add_valuation(cleaned_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def process_financial_data(ticker: str = "META") -> pd.DataFrame:
+    """prep data for specified accounts and return df"""
     specified_accounts = [
         "NetCashProvidedByUsedInOperatingActivities",
         "CashAndCashEquivalentsAtCarryingValue",
         "Liabilities",
-        "AssetsCurrent",
         "Revenues",
         "Assets",
         "NetIncomeLoss",
         "LongTermDebt",
     ]
-    accounts_to_drop = ["AssetsCurrent"]
     accounts_to_rename = {
         "NetCashProvidedByUsedInOperatingActivities": "CashFlows",
         "CashAndCashEquivalentsAtCarryingValue": "Cash",
@@ -173,12 +172,12 @@ def process_financial_data(ticker: str = "META") -> pd.DataFrame:
     company_data = fetch_company_facts_data_list(ticker, specified_accounts)
     result_df = merge_final_df(company_data)
     result_df = result_df.rename(columns=accounts_to_rename)
-    result_df = result_df.drop(columns=accounts_to_drop)
 
     return result_df
 
 
 def show_matplot(company_ticker: str):
+    """show plot for financial accounts"""
     data_df = process_financial_data(company_ticker)
     data_df = data_df.set_index("year")
 
@@ -193,6 +192,7 @@ def show_matplot(company_ticker: str):
 
 
 def get_formatted_financials(ticker: str):
+    """format df to dict type to prep for upload to db"""
     earnings_multiplier = 20
     average_years_timeframe = 3
 
@@ -211,6 +211,7 @@ def get_formatted_financials(ticker: str):
 
 
 def upload_to_mongodb(ticker: str):
+    """ upload dict data to mongoDB"""
     client = pymongo.MongoClient()
     db = client["hacker"]
     collection = db["dojo"]

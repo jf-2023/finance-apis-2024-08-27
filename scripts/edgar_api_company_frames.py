@@ -4,12 +4,10 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-# Load the .env file
-load_dotenv()
-
 
 def load_env_var(var_name: str) -> str:
     """Function to load an environment variable"""
+    load_dotenv()
     value = os.getenv(var_name)
     if value is None:
         raise ValueError(f"Environment variable '{var_name}' not found.")
@@ -52,15 +50,17 @@ def get_account_frames(account: str, period: str) -> pd.DataFrame:
     return sorted_df
 
 
-df1 = get_account_frames("OperatingIncomeLoss", "CY2022")
-print(df1)
-df2 = get_account_frames("Assets", "CY2022Q4I")
-print(df2)
+def show_comparison_of_oinc_and_assets():
+    """showing a method of how to find stocks that are desirable"""
+    df1 = get_account_frames("OperatingIncomeLoss", "CY2022")
+    print(df1)
+    df2 = get_account_frames("Assets", "CY2022Q4I")
+    print(df2)
 
-merged_df = pd.merge(df1, df2, on="entityName")
-merged_df["OROA"] = round(merged_df["OperatingIncomeLoss"] / merged_df["Assets"], 2)
-merged_df = merged_df.sort_values(by="OROA", ascending=False)
-merged_df = merged_df.rename(columns={"OperatingIncomeLoss": "OperatingIncome"})
-# merged_df = merged_df[merged_df["OROA"] < 0.50]
-with pd.option_context("display.max_columns", 10):
-    print(merged_df.head(20))
+    merged_df = pd.merge(df1, df2, on="entityName")
+    merged_df["OROA"] = round(merged_df["OperatingIncomeLoss"] / merged_df["Assets"], 2)
+    merged_df = merged_df.sort_values(by="OROA", ascending=False)
+    merged_df = merged_df.rename(columns={"OperatingIncomeLoss": "OperatingIncome"})
+    # merged_df = merged_df[merged_df["OROA"] < 0.50]
+    with pd.option_context("display.max_columns", 10):
+        print(merged_df.head(20))

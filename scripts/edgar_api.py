@@ -111,7 +111,11 @@ def fetch_company_frames() -> pd.DataFrame:
 
 cik = fetch_cik("META")
 # Show output of all 4 url's
+print("company submission df:")
 print(fetch_company_submission(cik).T)
+print("\ncompany concept df:")
 print(fetch_company_concept(cik).T)
+print("\ncompany facts df:")
 print(fetch_company_facts(cik).T)
+print("\ncompany frames df:")
 print(fetch_company_frames().T)

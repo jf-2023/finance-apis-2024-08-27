@@ -107,30 +107,46 @@ def format_values(num: int) -> str:
     return str(num)
 
 
-def _format_values(int_df: pd.DataFrame) -> pd.DataFrame:
-    """helper function for format_values()"""
-    return int_df.map(format_values)
+def show_single_company(ticker: str, account: str):
+    df = get_company_concept_account(ticker, account)
+    print(df)
+
+    plot_df(df, account)
 
 
 def plot_df(dataframe: pd.DataFrame, account: str):
     """plot a line chart for a pandas df"""
     # Set the 'Year' column as the index
-    df = result.set_index(account)
+    df = dataframe.set_index(account)
     df.plot(kind="line")
 
     plt.show()
 
 
-companies_to_compare_list = ["META", "AAPL", "AMZN", "GOOG"]
-result = compare_companies(
-    companies_to_compare_list, "NetCashProvidedByUsedInOperatingActivities", "cashFlows"
-)
+def _format_values(int_df: pd.DataFrame) -> pd.DataFrame:
+    """helper function for format_values()"""
+    return int_df.map(format_values)
 
-result["cashFlows"] = result["cashFlows"].astype(int)
-result = result[result["cashFlows"] > 2015]
 
-with pd.option_context("display.max_columns", 10):
-    print(result)
-    print(_format_values(result))
+def show_company_comparison(account: str, account_rename: str):
+    companies_to_compare_list = ["META", "AAPL", "AMZN", "GOOG"]
 
-# plot_df(result, "cashFlows")
+    result = compare_companies(
+        companies_to_compare_list, account, account_rename
+    )
+
+    result["cashFlows"] = result[account_rename].astype(int)
+    result = result[result[account_rename] > 2015]
+
+    with pd.option_context("display.max_columns", 10):
+        print(result)
+        print(_format_values(result))
+
+    df = result.set_index(account_rename)
+    df.plot(kind="line")
+
+    plt.show()
+
+
+# show_single_company("META", "NetIncomeLoss")
+show_company_comparison("NetCashProvidedByUsedInOperatingActivities", "cashFlows")

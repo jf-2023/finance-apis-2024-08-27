@@ -84,7 +84,7 @@ def fetch_cik_obj(company_name: str = "") -> dict:
         return {}
 
 
-def show_company_facts_keys(cik_str: str) -> pd.DataFrame:
+def show_company_facts_keys(cik_str: str):
     """
     This API returns all the company concepts data for a company into a single API call:
     """
@@ -92,7 +92,7 @@ def show_company_facts_keys(cik_str: str) -> pd.DataFrame:
         f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik_str}.json"
     )
     normalized_df = pd.json_normalize(facts_json)
-    return normalized_df.T
+    print(normalized_df.T)
 
 
 def fetch_company_facts_data_list(
@@ -210,6 +210,7 @@ def get_formatted_financials(ticker: str):
     return result_dict
 
 
+
 def upload_to_mongodb(ticker: str):
     """upload dict data to mongoDB"""
     client = pymongo.MongoClient()
@@ -225,4 +226,8 @@ def upload_to_mongodb(ticker: str):
     client.close()
 
 
-upload_to_mongodb("META")
+df = process_financial_data("GOOG")
+print(df)
+show_matplot("GOOG")
+
+# upload_to_mongodb(TICKER)
